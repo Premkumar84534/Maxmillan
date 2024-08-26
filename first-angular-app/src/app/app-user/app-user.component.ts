@@ -1,6 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DUMMY_USERS } from '../dummy-users';
 
+/*type User = {
+  avatar: string;
+  name: string;
+  id: string;
+}*/
+
+interface User {
+  avatar: string;
+  name: string;
+  id: string;
+}
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -10,24 +22,25 @@ import { DUMMY_USERS } from '../dummy-users';
 })
 export class AppUserComponent {
 
-  @Input({required: true})
-  avatar!: string;
+  /*@Input()
+  user!: {
+    avatar: string;
+    name: string;
+    id: string;
+  }*/
 
   @Input()
-  name!: string;
-
-  @Input()
-  id!: string;
+  user!: User; //Type/Interface User defined on top
 
   @Output()
   select = new EventEmitter<string>();
 
   get imageSrc() {
-    return "assets/users/"  + this.avatar;
+    return "assets/users/"  + this.user.avatar;
   }
 
   onUserSelect() {
     console.log('Method not implemented.');
-    this.select.emit(this.id);
+    this.select.emit(this.user.id);
   }
 }
