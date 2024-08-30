@@ -10,7 +10,7 @@
     @for (task of selectedUserTasks; track task.id) {
       <li>
 
-        <task [userTask]=task></task>
+        <task [userTask]=task (completedTask)="changeTaskStatus($event)"></task>
 
         <!--@if (task.userId === userId) {
           <task [userTask]="task"></task>

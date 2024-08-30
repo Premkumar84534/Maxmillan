@@ -1,12 +1,5 @@
-import { Component, Input } from '@angular/core';
-
-interface userTaskInterface {
-  id: string,
-  userId: string,
-  title: string,
-  summary: string,
-  dueDate: string
-}
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { userTaskInterface } from './task.model';
 
 @Component({
   selector: 'task',
@@ -16,7 +9,13 @@ interface userTaskInterface {
   styleUrl: './task.component.css'
 })
 export class TaskComponent {
+
   @Input({required: true})
   userTask!: userTaskInterface;
+  @Output()
+  completedTask = new EventEmitter<string>();
 
+  completeTask() {
+    return this.completedTask.emit(this.userTask.id);
+  }
 }

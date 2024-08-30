@@ -9,6 +9,7 @@ import { TaskComponent } from './task/task.component';
   styleUrl: './app-task.component.css'
 })
 export class AppTaskComponent {
+
  /* @Input({required: true})
   name!: string;
 */
@@ -45,5 +46,8 @@ export class AppTaskComponent {
     return this.tasks.filter((task) => task.userId === this.userId);
   }
 
+  changeTaskStatus(taskid: string) {
+    this.tasks = this.tasks.filter((task) => task.id !== taskid)
+  }
 
 }
