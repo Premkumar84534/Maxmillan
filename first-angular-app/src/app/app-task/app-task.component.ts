@@ -1,22 +1,23 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
+import { NewTaskComponent } from "./task/new-task/new-task.component";
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './app-task.component.html',
   styleUrl: './app-task.component.css'
 })
 export class AppTaskComponent {
-
- /* @Input({required: true})
+  /* @Input({required: true})
   name!: string;
 */
   @Input({required: true})
   userName?: string;
   @Input({required: true})
   userId?: string;
+  addTaskClick:boolean = false;
 
   tasks = [
     {
@@ -50,4 +51,12 @@ export class AppTaskComponent {
     this.tasks = this.tasks.filter((task) => task.id !== taskid)
   }
 
+  addTask() {
+    this.addTaskClick = true;
+  }
+
+  cancelEmit(cancelClicked: boolean) {
+    console.log(cancelClicked)
+    this.addTaskClick = cancelClicked;
+  }
 }
