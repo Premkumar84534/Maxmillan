@@ -1,5 +1,5 @@
 @if(addTaskClick) {
-  <app-new-task (cancelEmit)="cancelEmit($event)"></app-new-task>
+  <app-new-task (cancelEmit)="cancelEmit($event)" (submitEmit)="onSaveTask($event)"></app-new-task>
 }
 
 <section id="tasks">

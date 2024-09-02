@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { NewTaskComponent } from "./task/new-task/new-task.component";
+import { NewTask } from './task/task.model';
+import { AppTaskService } from './app-task.service';
 
 @Component({
   selector: 'app-task',
@@ -16,8 +18,15 @@ export class AppTaskComponent {
   @Input({required: true})
   userName?: string;
   @Input({required: true})
-  userId?: string;
+  userId!: string;
   addTaskClick:boolean = false;
+
+  private apptaskService = Inject(AppTaskService);
+
+  //Alternate Approach
+  /*constructor(appTaskService: AppTaskService) {
+    this.apptaskService = appTaskService;
+  }*/
 
   tasks = [
     {
@@ -48,15 +57,29 @@ export class AppTaskComponent {
   }
 
   changeTaskStatus(taskid: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== taskid)
+    console.log("Inside changeTaskStatus");
+    this.tasks = this.apptaskService.changeTaskStatus(this.tasks, taskid);
   }
 
   addTask() {
     this.addTaskClick = true;
   }
 
+  onSaveTask(newTask: NewTask) {
+    this.addTaskClick = false;
+    this.tasks.push(
+      {
+        id: newTask.id,
+        userId: this.userId,
+        title: newTask.title,
+        summary: newTask.summary,
+        dueDate: newTask.dueDate
+
+      }
+    )
+  }
+
   cancelEmit(cancelClicked: boolean) {
-    console.log(cancelClicked)
     this.addTaskClick = cancelClicked;
   }
 }
